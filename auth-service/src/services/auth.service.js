@@ -10,7 +10,7 @@ export const authService = async ({ email, password }) => {
             return { code: 401, msg: "Usuario ó Contraseña inválida" }
 
         if (userFound.is_blocked) {
-            return res.status(401).json({ message: 'Cuenta bloqueada' });
+            return res.status(401).json({ msg: 'Cuenta bloqueada' });
         }
 
         const matchPassword = await User.comparePassword(
@@ -20,7 +20,8 @@ export const authService = async ({ email, password }) => {
 
         if (!matchPassword) {
             await handleFailedLoginAttempt(userFound);
-            return { code: 401, msg: "Usuario ó Contraseña inválida" }
+            let attemptsRestant = 5 - userFound.failed_login_attempts 
+            return { code: 401, msg: "Usuario ó Contraseña inválida", possibleAttemps: attemptsRestant}
         }
 
         await resetFailedLoginAttempts(userFound)
@@ -28,9 +29,9 @@ export const authService = async ({ email, password }) => {
         const token = jwt.sign(
             { id: userFound.user_id },
             JWT_SECRET,
-            { expiresIn: '48h' }
+            { expiresIn: '72h' }
         );
-
+    
         return { token }
 
     } catch (error) {

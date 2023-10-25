@@ -7,7 +7,7 @@ export const authUser = async (req, res) => {
         const result = await authService({ email, password });
 
         if (result.code === 401)
-            return res.status(401).json({ msg: result.msg });
+            return res.status(401).json({ msg: result.msg, possibleAttemps: result.possibleAttemps });
 
         const errorFields = validateFields(req);
 
