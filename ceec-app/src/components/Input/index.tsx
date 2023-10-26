@@ -1,4 +1,4 @@
-import { Text,  View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import { Controller, Control } from 'react-hook-form'
 import { LoginRequest } from '../../types/payload/request/AuthRequest'
 import { colors } from '../../constants/color'
@@ -31,12 +31,13 @@ export default function Input({
                         onChangeText={onChange}
                         onBlur={onBlur}
                         label={placeholder}
-                        secureTextEntry={securetextEntry} 
-                        textColor={colors.white}
+                        secureTextEntry={securetextEntry}
                         mode="outlined"
+                        outlineColor={colors.primary}
                         style={styles.input}
+                        activeOutlineColor={colors.primary}
                         outlineStyle={styles.outline}
-                        />
+                    />
                     {error && (
                         <Text style={styles.span}>{error.message ?? 'Error'}</Text>
                     )}
@@ -47,20 +48,17 @@ export default function Input({
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
+        marginVertical: 5
     },
     span: {
         color: colors.red,
         fontWeight: 'bold'
     },
-    input:{
-        color: colors.red,
-        width: "100%",
-        backgroundColor: colors.primary,
-    },
     outline: {
-        borderRadius: 25,
-        backgroundColor: 'rgba(0, 0, 0, 0.26)',
-
+        borderRadius: 50
+    },
+    input: {
+        width: "100%",
     }
 })

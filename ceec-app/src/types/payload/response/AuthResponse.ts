@@ -1,5 +1,5 @@
 export interface LoginResponse {
-    code: number; 
+    code?: number; 
     msg?: string; 
     token?: string; 
     possibleAttemps?: number
