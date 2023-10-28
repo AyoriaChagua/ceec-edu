@@ -60,10 +60,21 @@ async function getAllProfiles(req, res) {
   }
 }
 
+async function getAllUserProfileData(req, res) {
+  try {
+    const { userId } = req.params;
+    const userProfile = await profileService.getAllUserProfileDataService(userId);
+    res.json(userProfile);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching profiles' });
+  }
+}
+
 module.exports = {
   createProfile,
   getProfileById,
   updateProfile,
   deleteProfile,
   getAllProfiles,
+  getAllUserProfileData
 };
