@@ -64,7 +64,11 @@ async function getAllUserProfileData(req, res) {
   try {
     const { userId } = req.params;
     const userProfile = await profileService.getAllUserProfileDataService(userId);
-    res.json(userProfile);
+    if(userProfile.code === 404){
+      res.status(404).json({ msg: 'Perfil no encontrado' });
+    }else{
+      res.json(userProfile);
+    }
   } catch (error) {
     res.status(500).json({ error: 'Error fetching profiles' });
   }

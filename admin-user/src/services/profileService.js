@@ -35,13 +35,16 @@ async function getAllUserProfileDataService(userId) {
         }]
       }]
     });
-    if (user) {
-      return user;
-    } else {
-      throw new Error('Usuario no encontrado');
-    }
+    
+    if(user) return user;
+    
+    return ({
+      msg: 'Perfil de usuario no encontrado',
+      code: 404
+    })
   } catch (error) {
     console.error(error)
+    throw error
   }
 }
 
