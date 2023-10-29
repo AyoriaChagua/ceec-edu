@@ -78,5 +78,45 @@ GET http://localhost:4500/profiles/profiles/1
 ]
 ```
 
+**Consulta de un Perfil Específico (Perfil ID: 1)**
+```http
+GET http://localhost:4500/profiles/alldata/1
+```
+
+**Ejemplo de Respuesta para la Consulta de Perfiles en caso el usuario tenga un perfil**
+```json
+{
+  "user_id": 2,
+  "email": "erika@test.com",
+  "role_id": 2,
+  "expired_at": null,
+  "created_at": "2023-10-14T03:26:00.895Z",
+  "updated_at": "2023-10-26T18:38:24.268Z",
+  "Profile": {
+    "profile_id": 1,
+    "first_name": "Erika",
+    "last_name": "Ventur",
+    "document_id": 1,
+    "user_id": 2,
+    "document_number": 67890,
+    "phone": 555987654,
+    "created_at": "2023-10-14T11:42:04.492Z",
+    "updated_at": "2023-10-14T06:42:04.492Z",
+    "DocumentType": {
+      "document_id": 1,
+      "name": "DNI"
+    }
+  }
+}
+```
+
+**En caso de que no haya onfigurado un perfil: **
+```json
+{
+  "msg": "Perfil no encontrado"
+}
+```
+
+
 Asegúrate de incluir el token de autenticación en la cabecera de tus solicitudes para acceder a los recursos de administración de usuarios y perfiles.
 
