@@ -1,4 +1,5 @@
 const profileService = require('../services/profileService');
+const { getUserById } = require('../services/userService');
 
 async function createProfile(req, res) {
   try {
@@ -65,7 +66,8 @@ async function getAllUserProfileData(req, res) {
     const { userId } = req.params;
     const userProfile = await profileService.getAllUserProfileDataService(userId);
     if(userProfile.code === 404){
-      res.status(404).json({ msg: 'Perfil no encontrado' });
+      const user = await getUserById(userId);
+      res.json(user);
     }else{
       res.json(userProfile);
     }

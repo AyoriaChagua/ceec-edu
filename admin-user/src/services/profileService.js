@@ -39,7 +39,6 @@ async function getAllUserProfileDataService(userId) {
     if(user) return user;
     
     return ({
-      msg: 'Perfil de usuario no encontrado',
       code: 404
     })
   } catch (error) {
