@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, Pressable } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 
@@ -14,9 +14,7 @@ function ButtonGradient({ onPress }: ButtonGradientProps) {
                 colors={["#7076FA", "#4951FF", "#2B32CE"]}
                 style={styles.gradient}
             >
-                <Pressable onPress={onPress}>
-                    <Text style={styles.text}>Acceder</Text>
-                </Pressable>
+                <Text style={styles.text}>Acceder</Text>
             </LinearGradient>
         </TouchableOpacity>
     )
@@ -27,6 +25,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 23,
         color: 'white',
+        fontWeight: "bold"
     },
     button: {
         height: 50,

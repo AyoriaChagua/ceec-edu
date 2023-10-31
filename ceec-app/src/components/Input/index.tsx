@@ -2,14 +2,16 @@ import { Text, View, StyleSheet } from 'react-native'
 import { Controller, Control } from 'react-hook-form'
 import { LoginRequest } from '../../types/payload/request/AuthRequest'
 import { colors } from '../../constants/color'
-import { TextInput } from 'react-native-paper';
+import { Icon, TextInput } from 'react-native-paper';
+
 
 interface Props {
     control: Control<LoginRequest>
     name: "email" | "password"
     rules?: {}
     placeholder?: string
-    securetextEntry: boolean
+    securetextEntry: boolean,
+    icon: string
 }
 
 export default function Input({
@@ -17,7 +19,8 @@ export default function Input({
     name,
     rules,
     placeholder,
-    securetextEntry
+    securetextEntry,
+    icon
 }: Props) {
     return (
         <Controller
@@ -37,7 +40,10 @@ export default function Input({
                         style={styles.input}
                         activeOutlineColor={colors.primary}
                         outlineStyle={styles.outline}
+                        right={< TextInput.Icon icon={icon} />}
+                       
                     />
+                     
                     {error && (
                         <Text style={styles.span}>{error.message ?? 'Error'}</Text>
                     )}

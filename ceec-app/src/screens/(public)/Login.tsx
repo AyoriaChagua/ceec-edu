@@ -13,7 +13,7 @@ function Login() {
 
   const onLoginPressed: SubmitHandler<LoginRequest> = async data => {
     try {
-      const dataForm = { email: data.email, password: data.password }
+      const dataForm = { email: data.email.toLowerCase(), password: data.password }
       const result = await onLogin!(dataForm.email, dataForm.password)
       if (result?.msg) {
         alert(`${result.msg} \n${result?.possibleAttemps ? "Te quedan " + result.possibleAttemps + " intentos" : ""}`)
@@ -23,6 +23,7 @@ function Login() {
       alert('Oops')
     }
   }
+  
   if(errorMessage){
     Alert.alert("Error en el servidor", errorMessage) 
   }
@@ -37,10 +38,12 @@ function Login() {
             name='email'
             rules={{ required: 'El email es obligatorio' }}
             securetextEntry={false}
-            placeholder='Correo electrónico' />
+            placeholder='Correo electrónico' 
+            icon='email'/>
           <Input
             control={control}
             name='password'
+            icon='eye'
             rules={{
               required: {
                 value: true,
