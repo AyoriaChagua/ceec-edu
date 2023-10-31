@@ -4,36 +4,27 @@ import { Table as TableBase, Row } from 'react-native-reanimated-table';
 import { colors } from '../../constants/color';
 
 interface Props {
-    tableHead?: string[];
-    tableData?: Array<Array<number | string>>;
-    widthArr?:  number[];
+    tableHead: string[];
+    tableData: Array<Array<number | string>>;
+    widthArr:  number[];
 }
 
 const Table = ({tableHead, tableData, widthArr}: Props) => {
-    const state = {
-        tableHead: ['Nombre', 'F. creación', 'Nro estudiantes', 'Duración'],
-        tableData: [
-            ['Recursos humanos', 'Feb 12, 2023', '3', '2 semanas'],
-            ['Atención al cliente', 'Feb 12, 2023', '10', '2 semanas'],
-        ],
-        widthArr: [200, 100, 100, 100]
-    };
-
     return (
         <View style={styles.container}>
             <ScrollView horizontal={true}>
                 <View>
                     <TableBase borderStyle={styles.border}>
-                        <Row data={state.tableHead} widthArr={state.widthArr} style={styles.header} textStyle={styles.textHeader} />
+                        <Row data={tableHead} widthArr={widthArr} style={styles.header} textStyle={styles.textHeader} />
                     </TableBase>
                     <ScrollView style={styles.dataWrapper}>
                         <TableBase borderStyle={styles.border}>
                             {
-                                state.tableData.map((rowData, index) => (
+                                tableData.map((rowData, index) => (
                                     <Row
                                         key={index}
                                         data={rowData}
-                                        widthArr={state.widthArr}
+                                        widthArr={widthArr}
                                         textStyle={styles.text}
                                         style={styles.row}
                                     />

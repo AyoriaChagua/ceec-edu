@@ -11,6 +11,7 @@ function Rating({ rating }: Props) {
             <RatingScore
                 showRating
                 startingValue={rating}
+                readonly
             />
         </View>
     )

@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: any) => {
         authenticated: null
     });
 
-    const [userData, setUserData] = useState<UserProfile |  null>(null)
+    const [userData, setUserData] = useState<UserProfile | null>(null)
 
     useEffect(() => {
         const loadToken = async () => {
@@ -67,8 +67,23 @@ export const AuthProvider = ({ children }: any) => {
 
     const login = async (email: string, password: string) => {
         try {
-            const resultAuth = await loginService({ email, password })
-            return resultAuth;
+            const result = await loginService({ email, password })
+            if (result.code === 401) {
+                return result
+            } else if (result.token) {
+                await SecureStore.setItemAsync(TOKEN_KEY, result.token)
+                axios.defaults.headers.common['Authorization'] = `${result.token}`
+
+                setAuthState({
+                    token: result.token,
+                    authenticated: true
+                })
+                const userProfile = await GetDataService();
+                if (userProfile) {
+                    setUserData(userProfile)
+                }
+            }
+            return result;
         } catch (error) {
             return { error: true, msg: (error as any).response.data.msg }
         }
@@ -81,6 +96,7 @@ export const AuthProvider = ({ children }: any) => {
             token: null,
             authenticated: false
         });
+        setUserData(null)
     }
 
     const value = useMemo(() => {

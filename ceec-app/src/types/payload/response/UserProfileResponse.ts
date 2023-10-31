@@ -1,7 +1,8 @@
-export interface UserProfile extends Profile {
+export interface UserProfile{
     email: string;
     role_id: number;
     expired_at: Date | null;
+    Profile?: Profile
 }
 
 export interface Profile {
