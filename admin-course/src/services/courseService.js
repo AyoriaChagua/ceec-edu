@@ -1,31 +1,53 @@
 const Course = require('../models/courseModel');
 
 exports.getAllCourses = async () => {
-  return await Course.findAll();
+  try {
+    return await Course.findAll();
+  } catch (error) {
+    console.error(error)
+  }
 };
 
 exports.getCourseById = async (courseId) => {
-  return await Course.findByPk(courseId);
+  try {
+    return await Course.findByPk(courseId);
+  } catch (error) {
+    console.error(error)
+  }
 };
 
 exports.createCourse = async (courseData) => {
-  return await Course.create(courseData);
+  try {
+    return await Course.create(courseData);
+  } catch (error) {
+    console.error(error)
+  }
 };
 
 exports.updateCourse = async (courseId, courseData) => {
-  const course = await Course.findByPk(courseId);
-  if (course) {
-    await course.update(courseData);
-    return course;
+  try {
+    const course = await Course.findByPk(courseId);
+    if (course) {
+      await course.update(courseData);
+      return course;
+    }
+    return null;
+  } catch (error) {
+    console.error(error)
   }
-  return null;
+
 };
 
 exports.deleteCourse = async (courseId) => {
-  const course = await Course.findByPk(courseId);
-  if (course) {
-    await course.destroy();
-    return course;
+  try {
+    const course = await Course.findByPk(courseId);
+    if (course) {
+      await course.destroy();
+      return course;
+    }
+    return null;
+  } catch (error) {
+    console.error(error)
   }
-  return null;
+
 };

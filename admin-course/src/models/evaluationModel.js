@@ -5,23 +5,31 @@ const Evaluation = sequelize.define('Evaluation', {
   evaluation_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true,
+    allowNull: false,
   },
-  name: DataTypes.STRING(50),
-  description: DataTypes.STRING(50),
-  note: DataTypes.INTEGER,
-  module_id: DataTypes.INTEGER,
+  name: {
+    type: DataTypes.STRING,
+  },
+  description: {
+    type: DataTypes.TEXT,
+  },
+  note: {
+    type: DataTypes.INTEGER,
+  },
+  module_id: {
+    type: DataTypes.INTEGER,
+  },
   created_at: {
     type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    allowNull: false,
   },
   updated_at: {
     type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    allowNull: false,
   },
 }, {
   tableName: 'evaluations',
-  timestamps: false, // You can set this to true if you want timestamps
+  timestamps: false, 
 });
 
 module.exports = Evaluation;

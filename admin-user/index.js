@@ -14,7 +14,6 @@ Profile.belongsTo(User, { foreignKey: 'user_id' });
 Profile.belongsTo(DocumentType, {foreignKey: 'document_id'})
 
 app.use(cors())
-
 // Middleware para procesar solicitudes JSON
 app.use(express.json());
 

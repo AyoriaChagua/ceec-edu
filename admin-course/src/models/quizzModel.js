@@ -1,28 +1,45 @@
 const { DataTypes } = require('sequelize');
-const {sequelize } = require('../config/database');
+const { sequelize } = require('../config/database');
+const Evaluation = require('./evaluationModel')
+const QuizzType = require('./quizzTypeModel')
 
 const Quizz = sequelize.define('Quizz', {
   quizz_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true,
+    allowNull: false,
   },
-  evaluation_id: DataTypes.INTEGER,
-  quizz_text: DataTypes.TEXT,
-  image_url: DataTypes.STRING(255),
-  module_id: DataTypes.INTEGER,
-  quizz_type: DataTypes.INTEGER,
+  evaluation_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Evaluation,
+      key: 'evaluation_id',
+    }
+  },
+  quizz_text: {
+    type: DataTypes.TEXT, 
+  },
+  image_url: {
+    type: DataTypes.STRING, 
+  },
+  quizz_type: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: QuizzType,
+      key: 'quizz_type'
+    } 
+  },
   created_at: {
     type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    allowNull: false,
   },
   updated_at: {
     type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    allowNull: false,
   },
 }, {
   tableName: 'quizzes',
-  timestamps: false, // You can set this to true if you want timestamps
+  timestamps: false,
 });
 
 module.exports = Quizz;

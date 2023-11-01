@@ -1,32 +1,54 @@
-const Course = require('../models/moduleModel');
+const Module = require('../models/moduleModel');
 
 
 exports.getAllModules = async () => {
-  return await Module.findAll();
+  try {
+    return await Module.findAll();
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 exports.getModuleById = async (moduleId) => {
-  return await Module.findByPk(moduleId);
+  try {
+    return await Module.findByPk(moduleId);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 exports.createModule = async (moduleData) => {
-  return await Module.create(moduleData);
+  try {
+    return await Module.create(moduleData);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 exports.updateModule = async (moduleId, moduleData) => {
-  const module = await Module.findByPk(moduleId);
-  if (module) {
-    await module.update(moduleData);
-    return module;
+  try {
+    const module = await Module.findByPk(moduleId);
+    if (module) {
+      await module.update(moduleData);
+      return module;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
   }
-  return null;
+
 };
 
 exports.deleteModule = async (moduleId) => {
-  const module = await Module.findByPk(moduleId);
-  if (module) {
-    await module.destroy();
-    return module;
+  try {
+    const module = await Module.findByPk(moduleId);
+    if (module) {
+      await module.destroy();
+      return module;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
   }
-  return null;
+
 };

@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const evaluationsController = require('../controllers/evaluationController');
+const authenticateToken = require('../middlewares/authenticationMiddleware');
 
-router.get('/', evaluationsController.getAllEvaluations);
-router.get('/:id', evaluationsController.getEvaluationById);
-router.post('/', evaluationsController.createEvaluation);
-router.put('/:id', evaluationsController.updateEvaluation);
-router.delete('/:id', evaluationsController.deleteEvaluation);
+router.get('/',  authenticateToken, evaluationsController.getAllEvaluations);
+router.get('/:id',  authenticateToken, evaluationsController.getEvaluationById);
+router.post('/',  authenticateToken, evaluationsController.createEvaluation);
+router.put('/:id',  authenticateToken, evaluationsController.updateEvaluation);
+router.delete('/:id', authenticateToken,  evaluationsController.deleteEvaluation);
 
 module.exports = router;
