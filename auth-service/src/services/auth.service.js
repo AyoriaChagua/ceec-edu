@@ -20,18 +20,22 @@ export const authService = async ({ email, password }) => {
 
         if (!matchPassword) {
             await handleFailedLoginAttempt(userFound);
-            let attemptsRestant = 5 - userFound.failed_login_attempts 
-            return { code: 401, msg: "Usuario ó Contraseña inválida", possibleAttemps: attemptsRestant}
+            let attemptsRestant = 5 - userFound.failed_login_attempts
+            return { code: 401, msg: "Usuario ó Contraseña inválida", possibleAttemps: attemptsRestant }
         }
 
         await resetFailedLoginAttempts(userFound)
 
         const token = jwt.sign(
-            { id: userFound.user_id },
+            {
+                id: userFound.user_id,
+                role: userFound.role_id,
+                loginTime: new Date()
+            },
             JWT_SECRET,
-            { expiresIn: '72h' }
+            { expiresIn: '48h' }
         );
-    
+
         return { token }
 
     } catch (error) {
