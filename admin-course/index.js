@@ -1,44 +1,30 @@
 const express = require('express');
-const app = express();
-const sequelize = require('./src/config/database');
+const http = require('http');
 const cors = require('cors');
-require('dotenv').config();
+const app = express();
+const server = http.createServer(app);
 const PORT = process.env.PORT || 4100;
+const jwt = require('jsonwebtoken')
 
-const Evaluation = require('./src/models/evaluationModel')
-const Quizz = require('./src/models/quizzModel')
-const QuizzType = require('./src/models/quizzTypeModel')
-const Course = require('./src/models/courseModel');
-const Module = require('./src/models/moduleModel');
+const SocketService = require('./src/services/socketService');
+require('./src/models/relations')
+require('dotenv').config();
 
-Evaluation.hasOne(Quizz, {
-  foreignKey: 'evaluation_id'
-})
-QuizzType.hasOne(Quizz, {
-  foreignKey: 'quizz_type'
-})
-Course.hasOne(Module, {
-  foreignKey: 'course_id',
-})
-Quizz.belongsTo(Evaluation, {
-  foreignKey: 'evaluation_id'
-})
-Quizz.belongsTo(QuizzType, {
-  foreignKey: 'quizz_type'
-})
-Module.belongsTo(Course, {
-  foreignKey: 'course_id'
-})
 
 app.use(cors())
 app.use(express.json());
 
-app.use('/courses', require('./src/routes/courseRoutes'));
-app.use('/modules', require('./src/routes/moduleRoutes'));
-app.use('/evaluations', require('./src/routes/evaluationRoutes'));
-app.use('/quizzes', require('./src/routes/quizzRoutes'));
-app.use('/custom', require('./src/routes/customAdminRoutes'));
+app.use('/api/courses', require('./src/routes/courses/courseRoutes'));
+app.use('/api/modules', require('./src/routes/courses/moduleRoutes'));
+app.use('/api/evaluations', require('./src/routes/courses/evaluationRoutes'));
+app.use('/api/quizzes', require('./src/routes/courses/quizzRoutes'));
+app.use('/api/custom', require('./src/routes/courses/customAdminRoutes'));
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT} 🚀`);
+app.use('/api/users', require('./src/routes/users/userRoutes'))
+app.use('/api/profiles', require('./src/routes/users/profileRoutes'))
+
+SocketService(server);
+
+server.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT} \nhttp://localhost:4100/ 🚀`);
 });
