@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native'
 import React from 'react'
-import { Table, Rating, Progress, StudentCard, Button } from '../../../components'
+import { Table, Rating, Progress, StudentCard, Button } from '../../../../components'
 
 function ListComponents() {
     const state = {

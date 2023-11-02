@@ -8,10 +8,15 @@ import { TOKEN_KEY } from "../config/authConfig";
 import { AuthProps, AuthState } from "../types/AuthContext";
 import { handleErrors } from "../utils/errorHandling";
 import { UserProfile } from "../types/payload/response/UserProfileResponse";
-
+import { io } from "socket.io-client";
+import { Platform } from "react-native";
 
 
 const AuthContext = createContext<AuthProps>({});
+const server_url = Platform.OS === 'ios' ?
+'http://localhost:4100' :
+'http://192.168.0.11:4100';
+const socket = io(server_url)
 
 export const useAuth = () => {
     return useContext(AuthContext);
@@ -33,6 +38,7 @@ export const AuthProvider = ({ children }: any) => {
             try {
                 const token = await SecureStore.getItemAsync(TOKEN_KEY);
                 if (token) {
+                    socket.emit('login', { token });
                     const decodedToken: { exp: number, iat: number, id: number } = jwtDecode(token);
                     const expirationDate = new Date(decodedToken.exp * 1000);
                     const currentDate = new Date();
@@ -71,9 +77,9 @@ export const AuthProvider = ({ children }: any) => {
             if (result.code === 401) {
                 return result
             } else if (result.token) {
+                socket.emit('login', { token: result.token });
                 await SecureStore.setItemAsync(TOKEN_KEY, result.token)
                 axios.defaults.headers.common['Authorization'] = `${result.token}`
-
                 setAuthState({
                     token: result.token,
                     authenticated: true
@@ -96,6 +102,7 @@ export const AuthProvider = ({ children }: any) => {
             token: null,
             authenticated: false
         });
+        socket.emit('logout');
         setUserData(null)
     }
 
@@ -110,7 +117,5 @@ export const AuthProvider = ({ children }: any) => {
     }, [login, logout, authState, errorMessage, userData]);
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
-
-
 
 //separate functions 

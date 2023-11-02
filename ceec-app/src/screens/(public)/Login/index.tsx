@@ -1,11 +1,11 @@
 import { Image, StyleSheet,  View, Alert } from 'react-native'
 import React from 'react'
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../../context/AuthContext';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { LoginRequest } from '../../types/payload/request/AuthRequest';
-import { Form, Input } from '../../components';
+import { LoginRequest } from '../../../types/payload/request/AuthRequest';
+import { Form, Input } from '../../../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors } from '../../constants/color';
+import { colors } from '../../../constants/color';
 
 function Login() {
   const { control, handleSubmit } = useForm<LoginRequest>();
@@ -30,7 +30,7 @@ function Login() {
 
   return (
     <SafeAreaView style={styles.area}>
-      <Image source={require('../../assets/header-login.png')} style={styles.image} />
+      <Image source={require('../../../assets/header-login.png')} style={styles.image} />
       <View style={styles.content}>
         <Form handleSubmit={handleSubmit} onSubmit={onLoginPressed}>
           <Input
