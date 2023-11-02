@@ -20,3 +20,13 @@ exports.getCoursesByUser = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 }
+
+exports.getCoursesAndUsers = async (req, res) => {
+    try {
+        const coursesAndUsers = await customCourseModule.getCoursesAndUsers();
+        res.json(coursesAndUsers)
+    } catch (error) {
+        console.error('Error fetching courses and users:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}

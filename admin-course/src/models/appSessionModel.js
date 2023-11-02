@@ -7,7 +7,13 @@ const AppSession = sequelize.define('AppSession', {
         primaryKey: true,
         autoIncrement: true
     },
-    user_id: DataTypes.INTEGER,
+    user_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'Users',
+            key: 'user_id',
+        }
+    },
     start_time: DataTypes.DATE,
     end_time: DataTypes.DATE,
 }, {

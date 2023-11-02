@@ -19,7 +19,9 @@ const SocketService = (server) => {
                 if(id){
                     console.log(`El usuario con id ${id} se conectó a las ${loginTime}`)
                     activeUsers.set(socket.id, id);
-                    io.emit('active-users', Array.from(activeUsers.keys()));
+                    console.log(activeUsers)
+                    console.log(Array.from(activeUsers.values()))
+                    io.emit('active-users', Array.from(activeUsers.values()));
                 }
 
                 
@@ -32,12 +34,12 @@ const SocketService = (server) => {
         socket.on('logout', () => {
             console.log('Usuario desconectado');
             activeUsers.delete(socket.id);
-            io.emit('active-users', Array.from(activeUsers.keys()));
+            io.emit('active-users', Array.from(activeUsers.values()));
         });
         socket.on('disconnect', () => {
             console.log('Usuario desconectado');
             activeUsers.delete(socket.id);
-            io.emit('active-users', Array.from(activeUsers.keys()));
+            io.emit('active-users', Array.from(activeUsers.values()));
         });
     });
     return io;

@@ -3,8 +3,10 @@ const router = express.Router()
 const authenticateToken = require('../../middlewares/authenticationMiddleware')
 const customAdminController = require('../../controllers/courses/customAdminController')
 
-router.get('/cursesmodules', authenticateToken, customAdminController.getCoursesModules);
+router.get('/coursesmodules', authenticateToken, customAdminController.getCoursesModules);
 
-router.get('/cursesuser/:id', authenticateToken, customAdminController.getCoursesByUser);
+router.get('/coursesuser/:id', authenticateToken, customAdminController.getCoursesByUser);
+
+router.get('/coursesuser/', authenticateToken, customAdminController.getCoursesAndUsers);
 
 module.exports = router
