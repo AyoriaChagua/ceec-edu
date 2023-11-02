@@ -23,6 +23,8 @@ app.use('/api/custom', require('./src/routes/courses/customAdminRoutes'));
 app.use('/api/users', require('./src/routes/users/userRoutes'))
 app.use('/api/profiles', require('./src/routes/users/profileRoutes'))
 
+app.use('/coursestudent', require('./src/routes/courses/courseStudentRoutes'));
+
 SocketService(server);
 
 server.listen(PORT, () => {
