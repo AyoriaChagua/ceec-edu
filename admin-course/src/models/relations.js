@@ -66,12 +66,12 @@ Module.belongsTo(Course, {
 User.hasMany(AppSession, {
     foreignKey: 'user_id',
     as: 'appsessions',
-})
+});
 
 AppSession.belongsTo(User, {
     foreignKey: 'user_id',
     as: 'usersession',
-})
+});
 
 //un usuario tiene varios cursos
 User.belongsToMany(Course, {
