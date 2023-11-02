@@ -1,0 +1,1 @@
+usar notificaciones => expo notifications
