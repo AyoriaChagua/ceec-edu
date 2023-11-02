@@ -1,5 +1,5 @@
 const Course = require('../../models/courseModel')
-const Module = require('../../models/moduleModel')
+const User = require('../../models/userModel')
 
 exports.getCoursesModules = async () => {
     try {
@@ -10,5 +10,20 @@ exports.getCoursesModules = async () => {
     } catch (error) {
         console.error(error)
         throw error
+    }
+}
+
+exports.getCoursesByUser = async (user_id) => {
+    try {
+        const user = await User.findByPk(user_id);
+        const courses = await user.getCourses();
+        if (courses) {
+            return courses;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Error al obtener cursos del usuario:', error);
+        throw error;
     }
 }

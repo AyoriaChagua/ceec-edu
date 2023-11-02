@@ -1,5 +1,5 @@
 
-const CourseStudent = require('../models/courseStudent');
+const CourseStudent = require('../../models/courseStudent');
 const User = require('../../models/userModel');
 const Course = require('../../models/courseModel');
 

@@ -1,18 +1,24 @@
 const { DataTypes } = require('sequelize');
-const {sequelize} = require('../config/database'); // Import the Sequelize instance
-const User = require('../models/userModel');
-const Course = require('../models/courseModel');
+const { sequelize } = require('../config/database'); 
 const CourseStudent = sequelize.define('CourseStudent', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-  },  
+  },
   course_id: {
     type: DataTypes.INTEGER,
+    references: {
+      model: 'Courses', 
+      key: 'course_id',
+    },
   },
   user_id: {
     type: DataTypes.INTEGER,
+    references: {
+      model: 'Users', 
+      key: 'user_id',
+    },
   },
   progress: {
     type: DataTypes.INTEGER,
@@ -31,11 +37,8 @@ const CourseStudent = sequelize.define('CourseStudent', {
     defaultValue: DataTypes.NOW,
   },
 }, {
-    tableName: 'coursestudent',
-    timestamps: false,
-  });
-
-CourseStudent.belongsTo(User, { foreignKey: 'user_id' });
-CourseStudent.belongsTo(Course, { foreignKey: 'course_id' });
+  tableName: 'coursestudent',
+  timestamps: false,
+});
 
 module.exports = CourseStudent;
