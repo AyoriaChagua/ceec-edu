@@ -4,7 +4,30 @@ const QuizzType = require('./quizzTypeModel')
 const Course = require('./courseModel');
 const Module = require('./moduleModel');
 const CourseStudent = require('./courseStudent');
-const User = require('./userModel')
+const User = require('./userModel');
+const AppSession = require('./appSessionModel');
+const Profile = require('./profileModel');
+const DocumentType = require('./documentTypeModel');
+
+
+//un usuario tiene un perfil
+User.hasOne(Profile, {
+    foreignKey: 'user_id',
+});
+
+Profile.belongsTo(User, {
+    foreignKey: 'user_id',
+});
+
+
+//un perfil tiene un tipo de documento
+DocumentType.hasOne(Profile, {
+    foreignKey: 'document_id'
+})
+
+Profile.belongsTo(DocumentType, {
+    foreignKey: 'document_id'
+})
 
 //una evaluacion tiene varias preguntas 
 Evaluation.hasMany(Quizz, {
@@ -40,7 +63,15 @@ Module.belongsTo(Course, {
 });
 
 //un usuario tiene varias sesiones
+User.hasMany(AppSession, {
+    foreignKey: 'user_id',
+    as: 'appsessions',
+});
 
+AppSession.belongsTo(User, {
+    foreignKey: 'user_id',
+    as: 'usersession',
+});
 
 //un usuario tiene varios cursos
 User.belongsToMany(Course, {
