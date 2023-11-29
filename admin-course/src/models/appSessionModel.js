@@ -1,5 +1,6 @@
 const { DataTypes, Sequelize } = require('sequelize');
 const { sequelize } = require('../config/database');
+const User = require('./userModel');
 
 const AppSession = sequelize.define('AppSession', {
     appsession_id: {
@@ -10,7 +11,7 @@ const AppSession = sequelize.define('AppSession', {
     user_id: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'Users',
+            model: User,
             key: 'user_id',
         }
     },

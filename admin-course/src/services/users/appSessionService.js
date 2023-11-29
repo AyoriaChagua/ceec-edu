@@ -1,6 +1,5 @@
 const AppSession = require("../../models/appSessionModel")
 
-
 const createAppSessionService = async (appSession) => {
     try {
         const newAppSession = await AppSession.create(appSession);

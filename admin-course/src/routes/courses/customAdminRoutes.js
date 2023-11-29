@@ -11,11 +11,12 @@ router.get('/cursesmodules', authenticateToken, customAdminController.getCourses
 router.get('/coursesmodules', authenticateToken, customAdminController.getCoursesModules);
 
 
+//Filtro de cursos por user_id : http://localhost:4100/api/custom/coursesuser/${id}
 router.get('/coursesuser/:id', authenticateToken, customAdminController.getCoursesByUser);
 
 router.get('/coursesuser/', authenticateToken, customAdminController.getCoursesAndUsers);
 
-// Ruta para buscar módulos por curso
+//Filtro de modulos por courseId: http://localhost:4100/api/custom/${courseId}/modules 
 router.get('/:courseId/modules',authenticateToken, customModuleController.getModulesByCourse);
 
 

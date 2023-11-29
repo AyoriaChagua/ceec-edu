@@ -10,7 +10,6 @@ const SocketService = require('./src/services/socketService');
 require('./src/models/relations')
 require('dotenv').config();
 
-
 app.use(cors())
 app.use(express.json());
 
@@ -24,9 +23,13 @@ app.use('/api/appsession', require('./src/routes/users/appSessionRoutes'))
 app.use('/api/users', require('./src/routes/users/userRoutes'))
 app.use('/api/profiles', require('./src/routes/users/profileRoutes'))
 
+
 app.use('/coursestudent', require('./src/routes/courses/courseStudentRoutes'));
 
 SocketService(server);
+
+const { authenticateDatabase } = require('./src/config/migration');
+authenticateDatabase();
 
 server.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT} \nhttp://localhost:4100/ 🚀`);

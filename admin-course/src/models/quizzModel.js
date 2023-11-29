@@ -26,7 +26,7 @@ const Quizz = sequelize.define('Quizz', {
     type: DataTypes.INTEGER,
     references: {
       model: QuizzType,
-      key: 'quizz_type'
+      key: 'quizztype_id'
     } 
   },
   created_at: {
