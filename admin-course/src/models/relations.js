@@ -105,6 +105,7 @@ AppSession.belongsTo(User, {
     as: 'usersession',
 });
 
+
 //un usuario tiene varios cursos
 // User.belongsToMany(Course, {
 //     through: { model: CourseStudent, unique: false },
@@ -133,6 +134,18 @@ User.hasMany(EvaluationResult, {
 
 Evaluation.hasMany(EvaluationResult, {
     foreignKey: 'evaluation_id',
+});
+
+// En el modelo User
+User.belongsToMany(Course, {
+    through: CourseStudent,
+    foreignKey: 'user_id',
+});
+
+// En el modelo Course
+Course.belongsToMany(User, {
+    through: CourseStudent,
+    foreignKey: 'course_id',
 });
 
 CourseStudent.belongsTo(User, { foreignKey: 'user_id' });
