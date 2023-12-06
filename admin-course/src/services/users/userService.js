@@ -4,6 +4,7 @@ const CourseStudent = require('../../models/courseStudent');
 const User = require('../../models/userModel');
 const Profile = require('../../models/profileModel');
 const bcrypt = require('bcrypt');
+const Module = require('../../models/moduleModel');
 
 async function createUser(userData) {
   try {
@@ -18,7 +19,6 @@ async function createUser(userData) {
 
 async function getAllCourseStudentsWithDetails() {
   try {
-
     const result = await CourseStudent.findAll({
       attributes: ['progress', 'is_approved'],
       include: [
@@ -35,6 +35,13 @@ async function getAllCourseStudentsWithDetails() {
         {
           model: Course,
           attributes: ['name'],
+          include: [
+            {
+              model: Module, 
+              attributes: ['name', 'is_active'], 
+              as: 'modules',
+            },
+          ],
         },
       ],
     });
@@ -44,6 +51,8 @@ async function getAllCourseStudentsWithDetails() {
     throw new Error('Error al obtener los datos de los estudiantes de cursos. Detalles en la consola.');
   }
 }
+
+
 async function getUserById(userId) {
   return User.findByPk(userId);
 }

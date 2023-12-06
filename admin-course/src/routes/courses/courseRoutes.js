@@ -12,4 +12,6 @@ router.post('/', authenticateToken, coursesController.createCourse);
 router.put('/:id', authenticateToken, coursesController.updateCourse);
 router.delete('/:id', authenticateToken, coursesController.deleteCourse);
 
+router.get('/modules/all', authenticateToken, coursesController.getCoursesWithModules);
+
 module.exports = router;

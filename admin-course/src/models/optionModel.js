@@ -7,6 +7,7 @@ const Option = sequelize.define('Option', {
     option_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
     },
     quizz_id: {
         type: DataTypes.INTEGER,

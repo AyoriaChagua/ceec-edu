@@ -27,6 +27,10 @@ const Module = sequelize.define('Module', {
     type: DataTypes.TEXT,
     collate: 'pg_catalog."default"',
   },
+  created_at: {
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  }
 }, {
   tableName: 'modules',
   timestamps: false,

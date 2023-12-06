@@ -10,6 +10,15 @@ exports.getAllCourses = async (req, res) => {
   }
 };
 
+exports.getCoursesWithModules = async (req, res) => {
+  try {
+    const coursesWithModules = await courseService.getCoursesWithModules();
+    res.json(coursesWithModules);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
 exports.getCourseById = async (req, res) => {
   const courseId = req.params.id;
   try {

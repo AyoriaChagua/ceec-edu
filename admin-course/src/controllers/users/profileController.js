@@ -3,10 +3,13 @@ const { getUserById } = require('../../services/users/userService');
 
 async function createProfile(req, res) {
   try {
-    const profile = await profileService.createProfile(req.body);
+    const { user_id } = req.params;
+    const profile = await profileService.createProfile({ ...req.body, user_id: parseInt(user_id) });
+    console.log(profile);
     res.status(201).json(profile);
   } catch (error) {
-    res.status(500).json({ error: 'Error creating profile' });
+    console.error('Error creating profile:', error);
+    res.status(500).json({ error: 'Error creating profile', details: error.message });
   }
 }
 
@@ -65,12 +68,21 @@ async function getAllUserProfileData(req, res) {
   try {
     const { userId } = req.params;
     const userProfile = await profileService.getAllUserProfileDataService(userId);
-    if(userProfile.code === 404){
+    if (userProfile.code === 404) {
       const user = await getUserById(userId);
       res.json(user);
-    }else{
+    } else {
       res.json(userProfile);
     }
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching profiles' });
+  }
+}
+
+async function getDocumentTypes(req, res) {
+  try {
+    const documentTypes = await profileService.getDocumetTypes();
+    res.json(documentTypes);
   } catch (error) {
     res.status(500).json({ error: 'Error fetching profiles' });
   }
@@ -82,5 +94,6 @@ module.exports = {
   updateProfile,
   deleteProfile,
   getAllProfiles,
-  getAllUserProfileData
+  getAllUserProfileData,
+  getDocumentTypes
 };

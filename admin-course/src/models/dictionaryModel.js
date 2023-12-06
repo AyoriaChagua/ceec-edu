@@ -8,6 +8,7 @@ const DictionaryQuiz = sequelize.define('DictionaryQuiz', {
     type: DataTypes.INTEGER,
     primaryKey: true,
     allowNull: false,
+    autoIncrement: true,
   },
   word: {
     type: DataTypes.STRING,

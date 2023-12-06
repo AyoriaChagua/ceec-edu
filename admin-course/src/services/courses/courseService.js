@@ -1,4 +1,7 @@
 const Course = require('../../models/courseModel');
+const CourseStudent = require('../../models/courseStudent');
+const Module = require('../../models/moduleModel');
+const sequelize = require('sequelize');
 
 exports.getAllCourses = async () => {
   try {
@@ -51,3 +54,39 @@ exports.deleteCourse = async (courseId) => {
   }
 
 };
+
+
+exports.getCoursesWithModules = async () => {
+  try {
+    const coursesWithModules = await Course.findAll({
+      attributes: {
+        include: [
+          [sequelize.fn('COUNT', sequelize.col('CourseStudents.user_id')), 'user_count']
+        ],
+        exclude: ['id']  // Puedes excluir cualquier otra columna que no necesites
+      },
+      include: [
+        {
+          model: Module,
+          as: 'modules',
+          attributes: [
+            'is_active',
+            'created_at',
+            'name'
+          ],
+        },
+        {
+          model: CourseStudent,
+          as: 'CourseStudents',
+          attributes: [],
+          required: false,
+        },
+      ],
+      group: ['Course.course_id', 'modules.module_id'],
+    });
+    return coursesWithModules;
+  } catch (error) {
+    console.error('Error al obtener cursos con módulos:', error);
+    throw new Error('Error al obtener cursos con módulos. Detalles en la consola.');
+  }
+}

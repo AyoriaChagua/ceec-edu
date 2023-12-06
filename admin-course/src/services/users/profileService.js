@@ -22,6 +22,10 @@ async function getAllProfiles() {
   return Profile.findAll();
 }
 
+async function getDocumetTypes () {
+  return DocumentType.findAll();
+}
+
 async function getAllUserProfileDataService(userId) {
   try {
     const user = await User.findOne({
@@ -47,11 +51,14 @@ async function getAllUserProfileDataService(userId) {
   }
 }
 
+
+
 module.exports = {
   createProfile,
   getProfileById,
   updateProfile,
   deleteProfile,
   getAllProfiles,
-  getAllUserProfileDataService
+  getAllUserProfileDataService,
+  getDocumetTypes
 };

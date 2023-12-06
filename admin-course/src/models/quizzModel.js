@@ -8,6 +8,7 @@ const Quizz = sequelize.define('Quizz', {
     type: DataTypes.INTEGER,
     primaryKey: true,
     allowNull: false,
+    autoIncrement: true,
   },
   evaluation_id: {
     type: DataTypes.INTEGER,
