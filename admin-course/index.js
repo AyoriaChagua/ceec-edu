@@ -22,8 +22,8 @@ app.use('/api/appsession', require('./src/routes/users/appSessionRoutes'))
 
 app.use('/api/users', require('./src/routes/users/userRoutes'))
 app.use('/api/profiles', require('./src/routes/users/profileRoutes'))
-
-
+app.use('/api/quizztypes', require('./src/routes/courses/quizzTypeRoutes'));
+app.use('/flashcard', require('./src/routes/courses/flashCardRoutes'));
 app.use('/coursestudent', require('./src/routes/courses/courseStudentRoutes'));
 
 SocketService(server);
