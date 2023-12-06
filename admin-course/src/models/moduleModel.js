@@ -19,16 +19,6 @@ const Module = sequelize.define('Module', {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
   },
-  created_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: Sequelize.fn('now'),
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: Sequelize.fn('now'),
-  },
   name: {
     type: DataTypes.STRING(100),
     collate: 'pg_catalog."default"',

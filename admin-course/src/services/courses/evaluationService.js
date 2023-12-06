@@ -1,4 +1,5 @@
 const Evaluation = require('../../models/evaluationModel');
+const EvaluationResult = require('../../models/evaluationResultModel');
 
 exports.getAllEvaluations = async () => {
   try {
@@ -51,3 +52,12 @@ exports.deleteEvaluation = async (evaluationId) => {
   }
 
 };
+
+exports.saveResultEvaluation = async (evaluationResult) => {
+  try {
+    const result = await EvaluationResult.create(evaluationResult);
+    return result
+  } catch (error) {
+    console.error(error);
+  }
+}

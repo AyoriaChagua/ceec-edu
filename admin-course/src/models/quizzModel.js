@@ -29,14 +29,6 @@ const Quizz = sequelize.define('Quizz', {
       key: 'quizz_type'
     } 
   },
-  created_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
 }, {
   tableName: 'quizzes',
   timestamps: false,

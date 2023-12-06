@@ -1,4 +1,3 @@
-const Evaluation = require('../../models/evaluationModel');
 const evaluationService = require('../../services/courses/evaluationService');
 
 exports.getAllEvaluations = async (req, res) => {
@@ -67,3 +66,21 @@ exports.deleteEvaluation = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+exports.saveEvaluationResult = async (req, res) => {
+  try {
+    const {
+      user_id,
+      evaluation_id,
+      note,
+    } = req.body;
+  
+    const evaluationResult = await evaluationService.saveResultEvaluation({ user_id, evaluation_id, note });
+    console.log(evaluationResult)
+    res.json(evaluationResult);
+  } catch (error) {
+    console.error('Error saving evaluation result:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+
+}
