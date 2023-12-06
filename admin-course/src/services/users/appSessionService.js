@@ -1,8 +1,6 @@
 const AppSession = require("../../models/appSessionModel")
-<<<<<<< HEAD
+
 const { Op } = require('sequelize');
-=======
->>>>>>> 2afaa98822facd23d84f10041514b08b2e0ae76e
 
 const createAppSessionService = async (appSession) => {
     try {
