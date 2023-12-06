@@ -1,16 +1,16 @@
 const Course = require('../../models/courseModel')
-const CourseStudent = require('../../models/courseStudent')
-const User = require('../../models/userModel')
+const CourseStudent = require('../../models/courseStudent');
+const User = require('../../models/userModel');
 
 exports.getCoursesModules = async () => {
     try {
         const courseModules = await Course.findAll({
             include: 'modules',
         })
-        return courseModules
+        return courseModules;
     } catch (error) {
-        console.error(error)
-        throw error
+        console.error(error);
+        throw error;
     }
 }
 

@@ -8,6 +8,9 @@ const User = require('./userModel');
 const AppSession = require('./appSessionModel');
 const Profile = require('./profileModel');
 const DocumentType = require('./documentTypeModel');
+const DictionaryQuiz = require('./dictionaryQuizModel');
+const Option = require('./optionModel')
+const EvaluationResult = require('./evaluationResultModel')
 
 
 //un usuario tiene un perfil
@@ -27,17 +30,16 @@ DocumentType.hasOne(Profile, {
 
 Profile.belongsTo(DocumentType, {
     foreignKey: 'document_id'
-})
+});
 
 //una evaluacion tiene varias preguntas 
 Evaluation.hasMany(Quizz, {
     foreignKey: 'evaluation_id',
-    as: 'questions',
 })
+
 
 Quizz.belongsTo(Evaluation, {
     foreignKey: 'evaluation_id',
-    as: 'evaluation',
 });
 
 //un tipo de quizz tiene varias preguntas
@@ -46,10 +48,21 @@ QuizzType.hasMany(Quizz, {
     as: 'questions',
 });
 
+
 Quizz.belongsTo(QuizzType, {
     foreignKey: 'quizz_type',
     as: 'quizzType',
 });
+
+//una pregunta tiene varias opciones
+Quizz.hasMany(Option, {
+    foreignKey: 'quizz_id',
+})
+
+Option.belongsTo(Quizz, {
+    foreignKey: 'quizz_id',
+})
+
 
 //un curso tiene varios modulos
 Course.hasMany(Module, {
@@ -61,6 +74,25 @@ Module.belongsTo(Course, {
     foreignKey: 'course_id',
     as: 'course',
 });
+
+//un modulo tiene un diccionario
+Module.hasMany(DictionaryQuiz, {
+    foreignKey: 'module_id',
+})
+
+DictionaryQuiz.belongsTo(Module, {
+    foreignKey: 'dictionary_id',
+});
+
+//un modulo tiene una evaluación
+Module.hasOne(Evaluation, {
+    foreignKey: 'module_id',
+})
+
+Evaluation.belongsTo(Module, {
+    foreignKey: 'module_id'
+})
+
 
 //un usuario tiene varias sesiones
 User.hasMany(AppSession, {
@@ -74,14 +106,36 @@ AppSession.belongsTo(User, {
 });
 
 //un usuario tiene varios cursos
-User.belongsToMany(Course, {
-    through: { model: CourseStudent, unique: false },
+// User.belongsToMany(Course, {
+//     through: { model: CourseStudent, unique: false },
+//     foreignKey: 'user_id',
+//     otherKey: 'course_id',
+// });
+
+// Course.belongsToMany(User, {
+//     through: { model: CourseStudent, unique: false },
+//     foreignKey: 'user_id',
+//     otherKey: 'course_id',
+// });
+
+//el resultado de una evaluación tiiene un usuario y una evaluacion
+EvaluationResult.belongsTo(User,{
     foreignKey: 'user_id',
-    otherKey: 'course_id',
 });
 
-Course.belongsToMany(User, {
-    through: { model: CourseStudent, unique: false },
-    foreignKey: 'user_id',
-    otherKey: 'course_id',
+EvaluationResult.belongsTo(Evaluation,{
+    foreignKey: 'evaluation_id',
 });
+
+User.hasMany(EvaluationResult, {
+    foreignKey: 'user_id',
+});
+
+Evaluation.hasMany(EvaluationResult, {
+    foreignKey: 'evaluation_id',
+});
+
+CourseStudent.belongsTo(User, { foreignKey: 'user_id' });
+CourseStudent.belongsTo(Course, { foreignKey: 'course_id' });
+User.hasMany(CourseStudent, { foreignKey: 'user_id' });
+Course.hasMany(CourseStudent, { foreignKey: 'course_id' });

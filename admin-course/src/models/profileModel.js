@@ -25,15 +25,7 @@ const Profile = sequelize.define('Profile', {
     },
   },
   document_number: DataTypes.INTEGER,
-  phone: DataTypes.INTEGER,
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
+  phone: DataTypes.INTEGER
 }, {
   tableName: 'profiles',
   timestamps: false,

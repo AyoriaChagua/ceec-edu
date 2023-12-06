@@ -61,11 +61,34 @@ async function deleteUser(req, res) {
 async function getAllUsers(req, res) {
   try {
     const users = await userService.getAllUsers();
-    res.json(users);
+    const students = users.filter(user => user.role_id === 1);
+    res.json(students);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error al obtener los usuarios' });
   }
 }
 
-module.exports = { createUser, getUserById, updateUser, deleteUser, getAllUsers };
+
+async function getCourseStudentsStatistics(req, res) {
+  try {
+    const courseStudents = await userService.getAllCourseStudentsWithDetails();
+    const totalStudents = await userService.getStudentsQuantity();
+    const approvedStudents = courseStudents.filter(student => student.is_approved === true).length;
+    const inProgressStudents = courseStudents.filter(student => parseFloat(student.progress) > 0 && parseFloat(student.progress) < 1).length;
+    const disapprovedStudents = courseStudents.filter(student => student.is_approved === false).length;
+    const approvedPercentage = (approvedStudents / totalStudents) * 100;
+    const inProgressPercentage = (inProgressStudents / totalStudents) * 100;
+    const disapprovedPercentage = (disapprovedStudents / totalStudents) * 100;
+    res.json({
+      totalStudents,
+      approvedPercentage,
+      inProgressPercentage,
+      disapprovedPercentage,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener estadísticas de estudiantes de cursos.' });
+  }
+}
+module.exports = { createUser, getUserById, updateUser, deleteUser, getAllUsers, getCourseStudentsStatistics };

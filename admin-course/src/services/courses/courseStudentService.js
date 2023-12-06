@@ -3,10 +3,9 @@ const CourseStudent = require('../../models/courseStudent');
 const User = require('../../models/userModel');
 const Course = require('../../models/courseModel');
 
-// Get all course students with Course details
 exports.getAllCourseStudents = async () => {
   try {
-    return CourseStudent.findAll({
+    const courseStudents = await CourseStudent.findAll({
       include: [
         {
           model: User,
@@ -17,7 +16,9 @@ exports.getAllCourseStudents = async () => {
         },
       ],
     });
+    return courseStudents
   } catch (error) {
+    console.log(error)
     throw error;
   }
 };
@@ -25,20 +26,20 @@ exports.getAllCourseStudents = async () => {
 
 
 // Get course students by user_id
-// Get course students by user_id
 exports.getCourseStudentsByUserId = async (user_id) => {
-    try {
-      return CourseStudent.findAll({
-        where: { user_id: user_id },
-        include: [
-          {
-            model: Course,
-            attributes: ['course_id', 'name', 'image'],
-          },
-        ],
-      });
-    } catch (error) {
-      throw error;
-    }
-  };
-  
+  try {
+    const coursesByStudent = await CourseStudent.findAll({
+      where: { user_id: user_id },
+      include: [
+        {
+          model: Course,
+          attributes: ['course_id', 'name', 'image'],
+        },
+      ],
+    });
+    return coursesByStudent
+  } catch (error) {
+    console.log(error)
+    throw error;
+  }
+};
