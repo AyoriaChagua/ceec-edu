@@ -30,6 +30,7 @@ export const authService = async ({ email, password }) => {
             {
                 id: userFound.user_id,
                 role: userFound.role_id,
+                email: userFound.email,
                 loginTime: new Date()
             },
             JWT_SECRET,
