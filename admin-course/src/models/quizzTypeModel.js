@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
-
+//dicionarios , flashcard y evaluation 
 const QuizzType = sequelize.define('QuizzType', {
   quizztype_id: {
     type: DataTypes.INTEGER,

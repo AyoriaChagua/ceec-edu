@@ -1,30 +1,37 @@
-const { DataTypes, Sequelize } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
+
+const Quizz = require('./quizzModel');
 
 const Option = sequelize.define('Option', {
     option_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
     },
     quizz_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        references: {
+            model: Quizz, 
+            key: 'quizz_id',
+        },
     },
-    option_text: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
-    explanation: {
-        type: DataTypes.TEXT
-    },
+    option_text: DataTypes.STRING,
+    explanation: DataTypes.STRING,
     is_correct: {
-        type: DataTypes.BOOLEAN
-    }
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
+    created_at: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+    updated_at: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
 }, {
     tableName: 'options',
     timestamps: false,
-})
+});
 
-module.exports = Option
+module.exports = Option;

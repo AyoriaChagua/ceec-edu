@@ -1,5 +1,9 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database'); 
+const User = require('./userModel');
+const Course = require('./courseModel')
+
+
 const CourseStudent = sequelize.define('CourseStudent', {
   id: {
     type: DataTypes.INTEGER,
@@ -9,14 +13,14 @@ const CourseStudent = sequelize.define('CourseStudent', {
   course_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'Courses', 
+      model: Course, 
       key: 'course_id',
     },
   },
   user_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'Users', 
+      model: User, 
       key: 'user_id',
     },
   },
